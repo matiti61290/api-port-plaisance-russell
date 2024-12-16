@@ -8,5 +8,24 @@
 <body>
     <h1>Bienvenue dans le tableau de bord</h1>
     <h1>Bienvenue, <%= user.name %>!</h1>
+
+    <div>
+        <h1>Ajoutez un utilisateur</h1>
+        <form action="http://localhost:3000/users/add" method="POST">
+            <div>
+                <label for="name">Nom</label>
+                <input type="text" name="name" required>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Mot de passe</label>
+                <input type="password" name="password" required>
+            </div>
+            <button type="submit">Ajouter</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
   res.render('home', {errorMessage: null});
 });
 router.get('/dashboard', private.checkJWT, async (req, res) => {
-  console.log(req.user)
   res.render('dashboard', { user: req.user })
 })
 
