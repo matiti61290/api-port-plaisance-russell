@@ -11,7 +11,7 @@ router.post('/add', private.checkJWT, service.addUser);
 
 router.patch('/:id', private.checkJWT, service.updateUser);
 
-router.delete('/:id', private.checkJWT, service.deleteUser);
+router.post('/delete', private.checkJWT, service.deleteUser);
 
 router.post('/authenticate', service.authenticate)
 

@@ -63,15 +63,25 @@ exports.updateUser = async (req, res, next) => {
 
 // Callback to delete a user
 exports.deleteUser = async (req, res, next) => {
-    const id = req.params.id;
+    const email = req.body.email
     
     try{
-        await User.deleteOne({_id: id});
-
-        return res.status(204).json('delete_ok');
+        await User.deleteOne({email: email});
+        
+        console.log('utilisateur supprime')
+        return res.redirect('/dashboard');
     } catch (error) {
-        return res.status(501).json(error);
+        return res.status(501).json(error)
     }
+    // const id = req.params.id;
+    
+    // try{
+    //     await User.deleteOne({_id: id});
+
+    //     return res.status(204).json('delete_ok');
+    // } catch (error) {
+    //     return res.status(501).json(error);
+    // }
 }
 
 // Callback for login

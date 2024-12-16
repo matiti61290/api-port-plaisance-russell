@@ -27,5 +27,17 @@
             <button type="submit">Ajouter</button>
         </form>
     </div>
+
+    <div>
+        <h1>Supprimer un utilisateur</h1>
+        <form method="post" action="http://localhost:3000/users/delete">
+            <input type="hidden" name="_method" value="DELETE">
+            <div>
+                <label for="email">Entrez l'email de l'utilisateur</label>
+                <input type="email" name="email">
+            </div>
+            <button type="submit">Supprimer</button>
+        </form>
+    </div>
 </body>
 </html>
