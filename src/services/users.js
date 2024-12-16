@@ -21,18 +21,14 @@ exports.getUserById = async (req, res, next) => {
 
 // Callback to create a user
 exports.addUser = async (req, res, next) => {
-    const temp = ({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
-    });
+    const { name, email, password } = req.body
 
-    try {
-        let user = await User.create(temp);
+    try{
+        let user = await User.create({ name, email, password});
 
-        return res.status(201).json(user);
+        return res.redirect('/dashboard');
     } catch (error) {
-        return res.status(501).json(error);
+        return res.status(501).json(error)
     }
 }
 
