@@ -80,11 +80,12 @@ exports.deleteUser = async (req, res, next) => {
 
 // Callback for login
 exports.authenticate = async (req, res, next) => {
+    console.log(req.body);
     const { email, password } = req.body;
     const SECRET_KEY = process.env.SECRET_KEY;
 
     try {
-        let user = await User.findOne({email: email}, '-__v -createdAt -updateAt');
+        let user = await User.findOne({ email: email }, '-__v -createdAt -updateAt');
 
         if (user) {
             bcrypt.compare(password, user.password, function(err, response) {
@@ -103,8 +104,9 @@ exports.authenticate = async (req, res, next) => {
                         expiresIn: expireIn
                     });
 
-                    res.header('Authorization', 'Bearer' + token);
-                    return res.status(200).json('authenticate_succeed');
+                    res.header('Authorization', 'Bearer ' + token);
+                    // return res.status(200).json('authenticate_succeed');
+                    return res.redirect('/dashboard');
                 }
 
                 return res.status(403).json('wrong_credentials');
