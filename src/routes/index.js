@@ -12,6 +12,9 @@ router.get('/', async (req, res) => {
   // });
   res.render('home', {errorMessage: null});
 });
+router.get('/dashboard', async (req, res) => {
+  res.render('dashboard', { user: req.user })
+})
 
 router.use('/users', userRoute);
 
