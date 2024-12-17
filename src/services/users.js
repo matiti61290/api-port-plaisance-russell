@@ -2,7 +2,7 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Callback to find a user with ID
+// Callback to find a user with ID and redirect to the update page
 exports.getUserById = async (req, res, next) => {
     const id = req.params.id
 
@@ -10,7 +10,7 @@ exports.getUserById = async (req, res, next) => {
         let user = await User.findById(id);
 
         if (user) {
-            return res.status(200).json(user);
+            return res.render('updateUser', { user });
         }
 
         return res.status(404).json('user_not_found');
@@ -57,6 +57,7 @@ exports.addUser = async (req, res, next) => {
 // Callback to update a user
 exports.updateUser = async (req, res, next) => {
     const id = req.params.id
+
     const temp = ({
         name: req.body.name,
         email: req.body.email,
@@ -74,7 +75,8 @@ exports.updateUser = async (req, res, next) => {
             });
 
             await user.save();
-            return res.status(200).json(user)
+            return res.redirect('/users/dashboard');
+            // return res.status(200).json(user)
         }
 
         return res.status(404).json('user_not_found');
@@ -85,10 +87,10 @@ exports.updateUser = async (req, res, next) => {
 
 // Callback to delete a user
 exports.deleteUser = async (req, res, next) => {
-    const id = req.body.id
+    const id = req.params.id
     
     try{
-        await User.deleteOne({id: id});
+        await User.deleteOne({_id: id});
         
         console.log('utilisateur supprime')
         return res.redirect('/users/dashboard');

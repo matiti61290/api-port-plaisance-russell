@@ -16,9 +16,12 @@
                 <% for (let email in users) { %>
                     <li>                        
                         <p>Nom: <%= users[email].name %> | Email: <%= users[email].email %> | Id: <%= users[email].id %> %></p>
-                        <form action="http://localhost:3000/users/delete" method="post">
+                        <form action="http://localhost:3000/users/<%= users[email].id %>/delete" method="post">
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit">Supprimer</button>
+                        </form>
+                        <form action="http://localhost:3000/users/<%= users[email].id %>/update/" method="get">
+                            <button type="submit">Modifier</button>
                         </form>
                     </li>
                 <% } %>
