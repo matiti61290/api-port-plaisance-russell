@@ -19,6 +19,28 @@ exports.getUserById = async (req, res, next) => {
     }
 }
 
+
+// Callback to get all users
+exports.getUsers = async (req, res, next) => {
+
+    try {
+        const users = await User.find({}).select('name email -_id');
+        
+        if (users) {
+            const usersObj = users.reduce((acc, user) => {
+                acc[user.email] = { name: user.name, email: user.email };
+                return acc
+            }, {});
+            return res.render('dashboard', { user: req.user, users: usersObj });
+            // return res.status(200).json(usersObj)
+        }
+
+        return res.status(404).json('users_not_found');
+    } catch (error) {
+        return res.status(501).json(error)
+    }
+}
+
 // Callback to create a user
 exports.addUser = async (req, res, next) => {
     const { name, email, password } = req.body
@@ -73,15 +95,6 @@ exports.deleteUser = async (req, res, next) => {
     } catch (error) {
         return res.status(501).json(error)
     }
-    // const id = req.params.id;
-    
-    // try{
-    //     await User.deleteOne({_id: id});
-
-    //     return res.status(204).json('delete_ok');
-    // } catch (error) {
-    //     return res.status(501).json(error);
-    // }
 }
 
 // Callback for login
@@ -117,7 +130,7 @@ exports.authenticate = async (req, res, next) => {
 
                     res.header('Authorization', 'Bearer ' + token);
                     // return res.status(200).json('authenticate_succeed');
-                    return res.redirect('/dashboard');
+                    return res.redirect('/users/dashboard');
                 }
 
                 return res.status(403).json('wrong_credentials');
