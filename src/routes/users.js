@@ -8,14 +8,13 @@ router.post('/authenticate', service.authenticate)
 
 router.get('/dashboard', private.checkJWT, service.getUsers);
 
-router.get('/:id', service.getUserById);
-
 router.post('/add', private.checkJWT, service.addUser);
 
-router.patch('/:id', private.checkJWT, service.updateUser);
+router.get('/:id/update', private.checkJWT, service.getUserById);
 
-router.post('/delete', private.checkJWT, service.deleteUser);
+router.post('/:id', private.checkJWT, service.updateUser);
 
+router.post('/:id/delete', private.checkJWT, service.deleteUser);
 
 
 module.exports = router;
