@@ -24,11 +24,11 @@ exports.getUserById = async (req, res, next) => {
 exports.getUsers = async (req, res, next) => {
 
     try {
-        const users = await User.find({}).select('name email -_id');
+        const users = await User.find({}).select('name email _id');
         
         if (users) {
             const usersObj = users.reduce((acc, user) => {
-                acc[user.email] = { name: user.name, email: user.email };
+                acc[user.email] = { name: user.name, email: user.email, id: user._id };
                 return acc
             }, {});
             return res.render('dashboard', { user: req.user, users: usersObj });
@@ -48,7 +48,7 @@ exports.addUser = async (req, res, next) => {
     try{
         let user = await User.create({ name, email, password});
 
-        return res.redirect('/dashboard');
+        return res.redirect('/users/dashboard');
     } catch (error) {
         return res.status(501).json(error)
     }
@@ -85,13 +85,13 @@ exports.updateUser = async (req, res, next) => {
 
 // Callback to delete a user
 exports.deleteUser = async (req, res, next) => {
-    const email = req.body.email
+    const id = req.body.id
     
     try{
-        await User.deleteOne({email: email});
+        await User.deleteOne({id: id});
         
         console.log('utilisateur supprime')
-        return res.redirect('/dashboard');
+        return res.redirect('/users/dashboard');
     } catch (error) {
         return res.status(501).json(error)
     }

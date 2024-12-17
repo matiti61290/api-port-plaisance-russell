@@ -14,7 +14,13 @@
         <ul>
             <% if (users && Object.keys(users).length > 0) { %>
                 <% for (let email in users) { %>
-                    <li>Nom: <%= users[email].name %> | Email: <%= users[email].email %></li>
+                    <li>                        
+                        <p>Nom: <%= users[email].name %> | Email: <%= users[email].email %> | Id: <%= users[email].id %> %></p>
+                        <form action="http://localhost:3000/users/delete" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit">Supprimer</button>
+                        </form>
+                    </li>
                 <% } %>
             <% } else { %>
                 <li>Aucun utilisateur trouvé.</li>
