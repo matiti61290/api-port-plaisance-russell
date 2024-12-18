@@ -3,6 +3,7 @@ const router = express.Router();
 const private = require('../middlewares/private')
 
 const userRoute = require('../routes/users');
+const catwaysRoute = require('../routes/catways')
 
 router.get('/', async (req, res) => {
   // res.status(200).json({
@@ -15,8 +16,9 @@ router.get('/', async (req, res) => {
 });
 router.get('/dashboard', private.checkJWT, async (req, res) => {
   res.render('dashboard', { user: req.user })
-})
+});
 
 router.use('/users', userRoute);
+router.use('/catways', catwaysRoute);
 
 module.exports = router;
