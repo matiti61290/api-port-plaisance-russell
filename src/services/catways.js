@@ -4,10 +4,10 @@ const Catway = require('../models/catway');
 // Callback to get all catways
 exports.getCatways = async(req, res, next) => {
     try {
-        const catways = await Catway.find();
+        const catways = await Catway.find().sort({ catwayNumber: 1});
 
         if (catways) {
-            return res.status(200).json(catways)
+            return res.render('catways', { catways });
         }
         
         return res.status(404).json("catways_not_found");
@@ -24,7 +24,7 @@ exports.getCatwayById = async (req, res, next) => {
         let catway = await Catway.findById(id);
 
         if (catway) {
-            return res.status(200).json(catway)
+            return res.render('catwayDetails', {catway})
         }
 
         return res.status(404).json("catway_not_found")
@@ -38,7 +38,7 @@ exports.addCatway = async(req, res, next) => {
     const { catwayNumber, type, catwayState} = req.body
 
     try{
-        let catway = await Catway.create ({ catwayNumber, type, catwayState});
+        let catway = await Catway.create ({ catwayNumber, type, catwayState });
         // Fonction pour verifier si numero de catway pas deja existant
         return res.status(201).json(catway)
     } catch (error) {
