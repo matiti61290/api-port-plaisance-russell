@@ -38,9 +38,19 @@ exports.addCatway = async(req, res, next) => {
     const { catwayNumber, type, catwayState} = req.body
 
     try{
-        let catway = await Catway.create ({ catwayNumber, type, catwayState });
-        // Fonction pour verifier si numero de catway pas deja existant
-        return res.status(201).json(catway)
+        const existingCatway = await Catway.findOne({ catwayNumber })
+        if (existingCatway) {
+            return res.render('dashboard', {
+                errorMessage: "Le catway a ce numero existe deja",
+                formData: req.body,
+                user: req.user,
+                users: {}
+            });
+        }
+
+        const catway = await Catway.create ({ catwayNumber, type, catwayState });
+        
+        return res.redirect(`/catways/${ catway.id }`)
     } catch (error) {
         return res.status(501).json(error)
     }
@@ -66,7 +76,7 @@ exports.updateCatway = async(req, res, next) => {
             });
 
             await catway.save();
-            return res.status(201).json(catway);
+            return res.redirect(`/catways/${catway.id}`);
         }
         return res.status(404).json("catway_not_found")
     } catch (error) {
@@ -81,7 +91,7 @@ exports.deleteCatway = async(req, res, next) => {
     try{
         await catway.deleteOne({_id: id});
 
-        return res.status(204).json("La_catway_est_delete")
+        return res.redirect('/catways/')
     } catch (error) {
         return res.status(501).json(error)
     }
