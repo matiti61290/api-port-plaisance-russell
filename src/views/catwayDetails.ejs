@@ -6,8 +6,32 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>detail du catway <%= catway.catwayNumber %></h1>
-    <p>Type: <%= catway.type %></p>
-    <p>Etat: <%= catway.catwayState %></p>
+    <header>
+        <form action="/users/dashboard" method="get">
+            <button type="submit">Retour au dashboard</button>
+        </form>
+        <form action="/catways/" method="get">
+            <button type="submit">Retour aux catways</button>
+        </form>
+    </header>
+    <main>
+        <h1>detail du catway <%= catway.catwayNumber %></h1>
+        <p>Type: <%= catway.type %></p>
+        <p>Etat: <%= catway.catwayState %></p>
+        <form action="/catways/<%= catway.id %>/update" method="post">
+            <input type="hidden" name="_method" value="PATCH">
+
+            <label for="catwayState">Description de l'etat de la catway</label>
+            <input type="text" name="catwayState" value="<%= catway.catwayState %>">
+            <button type="submit">Valider</button>
+        </form>
+        <div>
+            <h3>Supprimer le catway</h3>
+            <form action="/catways/<%= catway.id %>/delete" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit">Supprimer le catway</button>
+            </form>
+        </div>
+    </main>
 </body>
 </html>

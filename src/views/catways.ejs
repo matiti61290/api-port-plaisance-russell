@@ -6,16 +6,27 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Liste des catways</h1>
-    <ul>
-        <% catways.forEach(catway => { %>
-            <li>
-                <p>Numero de catway : <%= catway.catwayNumber %></p>
-                <form action="/catways/<%= catway.id %>" method="get">
-                    <button type="submit">Details</button>
-                </form>
-            </li>
-        <% }) %>
-    </ul>
+    <header>
+        <form action="/users/dashboard" method="get">
+            <button type="submit">Retour au dashboard</button>
+        </form>
+    </header>
+    <main>
+        <h1>Liste des catways</h1>
+        <ul>
+            <% catways.forEach(catway => { %>
+                <li>
+                    <p>Numero de catway : <%= catway.catwayNumber %></p>
+                    <form action="/catways/<%= catway.id %>" method="get">
+                        <button type="submit">Details</button>
+                    </form>
+                    <form action="/catways/<%= catway.id %>/delete" method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit">Supprimer le catway</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    </main>
 </body>
 </html>

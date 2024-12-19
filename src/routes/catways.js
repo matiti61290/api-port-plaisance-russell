@@ -10,8 +10,8 @@ router.get('/:id', private.checkJWT, service.getCatwayById);
 
 router.post('/', private.checkJWT, service.addCatway);
 
-router.patch('/:id', private.checkJWT, service.updateCatway);
+router.post('/:id/update', private.checkJWT, service.updateCatway);
 
-router.delete('/:id', private.checkJWT, service.deleteCatway)
+router.post('/:id/delete', private.checkJWT, service.deleteCatway)
 
 module.exports = router

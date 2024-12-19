@@ -92,7 +92,6 @@ exports.deleteUser = async (req, res, next) => {
     try{
         await User.deleteOne({_id: id});
         
-        console.log('utilisateur supprime')
         return res.redirect('/users/dashboard');
     } catch (error) {
         return res.status(501).json(error)
