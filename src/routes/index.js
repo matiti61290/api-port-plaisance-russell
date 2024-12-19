@@ -21,4 +21,5 @@ router.get('/dashboard', private.checkJWT, async (req, res) => {
 router.use('/users', userRoute);
 router.use('/catways', catwaysRoute);
 
+
 module.exports = router;
